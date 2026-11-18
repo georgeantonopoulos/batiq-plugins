@@ -25,10 +25,14 @@ patch="patch.crates-io.batiq-plugin.path=\"/sdk\""
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 
-# macOS, both architectures, on this Mac.
+# macOS, both architectures, on this Mac. Panic messages carry source paths,
+# so rewrite this machine's home, source and SDK folders out of the program:
+# a public download must not name whoever built it. (The last matching
+# prefix wins, so the home folder goes first.)
+remap="--remap-path-prefix=$HOME=/home --remap-path-prefix=$SOURCE=/src --remap-path-prefix=$SDK=/sdk"
 for pair in aarch64-apple-darwin:macos-arm64 x86_64-apple-darwin:macos-x64; do
     target=${pair%%:*}; platform=${pair##*:}
-    RUSTUP_TOOLCHAIN=$TOOLCHAIN CARGO_TARGET_DIR="$work/target" cargo build --locked --release \
+    RUSTFLAGS="$remap" RUSTUP_TOOLCHAIN=$TOOLCHAIN CARGO_TARGET_DIR="$work/target" cargo build --locked --release \
         --manifest-path "$SOURCE/Cargo.toml" --target "$target" \
         --config "patch.crates-io.batiq-plugin.path=\"$SDK\""
     mkdir -p "$work/bin-$platform"
@@ -73,6 +77,11 @@ for platform in macos-arm64 macos-x64 linux-x64 windows-x64; do
     mkdir -p "$folder/bin"
     cp "$work/bin-$platform/"* "$folder/bin/"
     chmod 755 "$folder/bin/"*
+    # Refuse to package anything that still holds this machine's home folder.
+    if LC_ALL=C grep -r -a -l -F -e "$HOME" "$folder" >&2; then
+        echo "the files above hold $HOME; not packaging $platform" >&2
+        exit 1
+    fi
     archive="$name-$version-$platform.zip"
     rm -f "$OUT/$archive"
     (cd "$work/zip-$platform" && zip -qrX "$OUT/$archive" "$name-$version")

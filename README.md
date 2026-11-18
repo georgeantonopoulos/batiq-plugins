@@ -7,11 +7,13 @@ from here by hand.
 
 | Plugin | What it does | Latest |
 | --- | --- | --- |
-| SAM3 | Mattes from a click: Segment Anything 3 tracks the object through the shot. | [sam3-v0.1.0](https://github.com/georgeantonopoulos/batiq-plugins/releases/tag/sam3-v0.1.0) |
+| SAM3 | Mattes from a click: Segment Anything 3 tracks the object through the shot. | [sam3-v0.2.0](https://github.com/georgeantonopoulos/batiq-plugins/releases/tag/sam3-v0.2.0) |
+| Deadline | Submit renders to a Thinkbox Deadline 10 farm, and set up the farm side. | [deadline-v1.0.0](https://github.com/georgeantonopoulos/batiq-plugins/releases/tag/deadline-v1.0.0) |
 
 Each release is tagged `<plugin>-v<version>` and holds one zip per machine:
 `macos-arm64`, `macos-x64`, `linux-x64` (glibc 2.34 or newer) and
-`windows-x64`, plus `SHA256SUMS`. BATIQ checks each zip's SHA-256 before
+`windows-x64`, plus `SHA256SUMS`. A plugin written only in Python ships one
+`any` zip for every machine. BATIQ checks each zip's SHA-256 before
 installing it.
 
 ## Building a release
