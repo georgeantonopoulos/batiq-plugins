@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "extensions": [
+    {
+      "id": "sam3",
+      "name": "SAM3",
+      "tagline": "Mattes from a click: Segment Anything 3 tracks the object through the shot.",
+      "version": "0.3.0",
+      "downloads": {
+        "macos-arm64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-macos-arm64.zip",
+          "sha256": "c6760c00f59590398a574e1599efdfeae679ad7a444441ec92e0c63eaa129728",
+          "size": 455551
+        },
+        "macos-x64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-macos-x64.zip",
+          "sha256": "bd0303c7d5ec2a78555f874157a9631f27abb2c607effa2ceb821156626b440b",
+          "size": 477662
+        },
+        "linux-x64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-linux-x64.zip",
+          "sha256": "cc0a1c245b69f3c13dac9799f56634af9096997a174d1bcbd5200375178bcaca",
+          "size": 503549
+        },
+        "windows-x64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-windows-x64.zip",
+          "sha256": "2bfecd7bfe581b15109aa93b7fe989c285af2de5a955c4f9b386c6762a0531a5",
+          "size": 750457
+        }
+      },
+      "needs": "Builds a Python environment with PyTorch (about 1 GB) on first use, then fetches Meta's SAM3 weights (3.4 GB) from Hugging Face, which asks you to accept Meta's licence first.",
+      "repository": "https://github.com/georgeantonopoulos/batiq-plugins"
+    },
+    {
+      "id": "deadline",
+      "name": "Deadline",
+      "tagline": "Submit renders to a Thinkbox Deadline 10 farm, and set up the farm side.",
+      "version": "1.0.0",
+      "downloads": {
+        "any": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/deadline-v1.0.0/batiq-deadline-1.0.0-any.zip",
+          "sha256": "49d65f7ba3739e62d7ddb5b035e5a4ca94b01e856a280185bc8cdba50bd98b6e",
+          "size": 16152
+        }
+      },
+      "needs": "A Deadline 10 client on this machine (deadlinecommand). The farm needs batiq-headless on each worker.",
+      "repository": "https://github.com/georgeantonopoulos/batiq-plugins"
+    }
+  ]
+}
