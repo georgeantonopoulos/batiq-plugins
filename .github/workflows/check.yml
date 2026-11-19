@@ -1,0 +1,81 @@
+# BATIQ reads catalogue.json from main, so merging a change to it ships the
+# extension. These checks run before that: every zip it names must download,
+# match its checksum and hold no home folder, and each changed extension
+# must install through the latest BATIQ on every machine it offers.
+name: Check the catalogue
+
+on:
+  pull_request:
+    paths: ["catalogue.json", "scripts/catalogue.py", ".github/workflows/check.yml"]
+  push:
+    branches: [main]
+    paths: ["catalogue.json", "scripts/catalogue.py", ".github/workflows/check.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  zips:
+    name: Every zip matches the list
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.changed.outputs.ids }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Which extensions changed
+        id: changed
+        run: |
+          base="${{ github.event.pull_request.base.sha || github.event.before }}"
+          if [ -n "$base" ] && git cat-file -e "$base:catalogue.json" 2>/dev/null; then
+            git show "$base:catalogue.json" > "$RUNNER_TEMP/older.json"
+          else
+            echo '{"extensions": []}' > "$RUNNER_TEMP/older.json"
+          fi
+          ids=$(python3 scripts/catalogue.py changed "$RUNNER_TEMP/older.json")
+          echo "ids=$ids" >> "$GITHUB_OUTPUT"
+          echo "Changed: ${ids:-none}"
+      - name: Download and check every zip
+        run: python3 scripts/catalogue.py check
+
+  install:
+    name: Installs through BATIQ (${{ matrix.os }})
+    needs: zips
+    if: needs.zips.outputs.changed != ''
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            asset: macos-aarch64.zip
+          - os: ubuntu-latest
+            asset: linux-x86_64.tar.gz
+          - os: windows-latest
+            asset: windows-x86_64.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download the latest BATIQ
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/batiq"
+          gh release download --repo georgeantonopoulos/batiq-releases \
+            --pattern "*-${{ matrix.asset }}" --dir "$RUNNER_TEMP/batiq"
+          cd "$RUNNER_TEMP/batiq"
+          case "${{ matrix.asset }}" in
+            *.tar.gz) tar -xzf *.tar.gz ;;
+            *) unzip -q *.zip ;;
+          esac
+          headless=$(find "$RUNNER_TEMP/batiq" -type f \( -name batiq-headless -o -name batiq-headless.exe \) | head -n 1)
+          test -n "$headless" || { echo "No batiq-headless in the ${{ matrix.asset }} download"; exit 1; }
+          echo "HEADLESS=$headless" >> "$GITHUB_ENV"
+      - name: Install and set up what changed
+        shell: bash
+        run: python scripts/catalogue.py install "$HEADLESS" --only "${{ needs.zips.outputs.changed }}"
