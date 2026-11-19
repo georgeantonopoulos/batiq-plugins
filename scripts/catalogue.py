@@ -228,6 +228,8 @@ def command_set(args):
     if not sums_file.exists():
         fail(f"{sums_file} is missing; scripts/build.sh's zips and their SHA256SUMS go there")
     for line in sums_file.read_text().splitlines():
+        if not line.strip():
+            continue
         digest, name = line.split(maxsplit=1)
         sums[name.strip().lstrip("*")] = digest
     downloads, version = {}, None
@@ -291,8 +293,11 @@ def headless_session(binary, home, requests, timeout):
     lines += [{"jsonrpc": "2.0", "id": n + 1, "method": method, "params": params}
               for n, (method, params) in enumerate(requests)]
     stdin = "".join(json.dumps(line) + "\n" for line in lines)
-    run = subprocess.run([str(binary)], input=stdin, capture_output=True, text=True,
-                         env=env, timeout=timeout, encoding="utf-8", errors="replace")
+    try:
+        run = subprocess.run([str(binary)], input=stdin, capture_output=True, text=True,
+                             env=env, timeout=timeout, encoding="utf-8", errors="replace")
+    except subprocess.TimeoutExpired:
+        return {}, f"BATIQ did not finish within {timeout} seconds (raise --timeout)"
     answers = {}
     for line in run.stdout.splitlines():
         try:

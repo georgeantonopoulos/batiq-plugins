@@ -73,7 +73,7 @@ jobs:
             *.tar.gz) tar -xzf *.tar.gz ;;
             *) unzip -q *.zip ;;
           esac
-          headless=$(find "$RUNNER_TEMP/batiq" -type f \( -name batiq-headless -o -name batiq-headless.exe \) | head -n 1)
+          headless=$(find "$RUNNER_TEMP/batiq" -type f \( -name batiq-headless -o -name batiq-headless.exe \) -print -quit)
           test -n "$headless" || { echo "No batiq-headless in the ${{ matrix.asset }} download"; exit 1; }
           echo "HEADLESS=$headless" >> "$GITHUB_ENV"
       - name: Install and set up what changed
