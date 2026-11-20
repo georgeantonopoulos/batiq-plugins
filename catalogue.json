@@ -5,27 +5,27 @@
       "id": "sam3",
       "name": "SAM3",
       "tagline": "Mattes from a click: Segment Anything 3 tracks the object through the shot.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "downloads": {
+        "linux-x64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.1/batiq-sam3-0.3.1-linux-x64.zip",
+          "sha256": "d82b0c9880dad48e207e3411671616163a2fbbbc120e71edeb4d3bd01a437fa8",
+          "size": 510838
+        },
         "macos-arm64": {
-          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-macos-arm64.zip",
-          "sha256": "c6760c00f59590398a574e1599efdfeae679ad7a444441ec92e0c63eaa129728",
-          "size": 455551
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.1/batiq-sam3-0.3.1-macos-arm64.zip",
+          "sha256": "0349dda8cf6d223b23aea0682301ccec2cf1dc71c7eb89eff183e46352650613",
+          "size": 461439
         },
         "macos-x64": {
-          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-macos-x64.zip",
-          "sha256": "bd0303c7d5ec2a78555f874157a9631f27abb2c607effa2ceb821156626b440b",
-          "size": 477662
-        },
-        "linux-x64": {
-          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-linux-x64.zip",
-          "sha256": "cc0a1c245b69f3c13dac9799f56634af9096997a174d1bcbd5200375178bcaca",
-          "size": 503549
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.1/batiq-sam3-0.3.1-macos-x64.zip",
+          "sha256": "998af2c254aa790aba24bc889dff03f6790ef675f39ac11e55293cb4a658e385",
+          "size": 484163
         },
         "windows-x64": {
-          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.0/batiq-sam3-0.3.0-windows-x64.zip",
-          "sha256": "2bfecd7bfe581b15109aa93b7fe989c285af2de5a955c4f9b386c6762a0531a5",
-          "size": 750457
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/sam3-v0.3.1/batiq-sam3-0.3.1-windows-x64.zip",
+          "sha256": "a73316fe9f54da652ae6dc5ef67888e1854958d4f225485860817fd35f64b3d7",
+          "size": 755078
         }
       },
       "needs": "Builds a Python environment with PyTorch (about 1 GB) on first use, then fetches Meta's SAM3 weights (3.4 GB) from Hugging Face, which asks you to accept Meta's licence first.",

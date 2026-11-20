@@ -7,7 +7,7 @@ from here by hand.
 
 | Plugin | What it does | Latest |
 | --- | --- | --- |
-| SAM3 | Mattes from a click: Segment Anything 3 tracks the object through the shot. | [sam3-v0.3.0](https://github.com/georgeantonopoulos/batiq-plugins/releases/tag/sam3-v0.3.0) |
+| SAM3 | Mattes from a click: Segment Anything 3 tracks the object through the shot. | [sam3-v0.3.1](https://github.com/georgeantonopoulos/batiq-plugins/releases/tag/sam3-v0.3.1) |
 | Deadline | Submit renders to a Thinkbox Deadline 10 farm, and set up the farm side. | [deadline-v1.0.0](https://github.com/georgeantonopoulos/batiq-plugins/releases/tag/deadline-v1.0.0) |
 
 Each release is tagged `<plugin>-v<version>` and holds one zip per machine:
