@@ -45,6 +45,31 @@
       },
       "needs": "A Deadline 10 client on this machine (deadlinecommand). The farm needs batiq-headless on each worker.",
       "repository": "https://github.com/georgeantonopoulos/batiq-plugins"
+    },
+    {
+      "id": "depth-pro-2",
+      "name": "Depth Pro 2",
+      "tagline": "Depth in metres from any plate, steady from frame to frame: Apple's Depth Pro 2.",
+      "version": "0.1.0",
+      "downloads": {
+        "linux-x64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/depth-pro-2-v0.1.0/batiq-depth-pro-2-0.1.0-linux-x64.zip",
+          "sha256": "7b3ea22c61c035daf3a2b428811de92a15dd3a0bf7b7f5fcb4d70eb0bfa970c2",
+          "size": 530759
+        },
+        "macos-arm64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/depth-pro-2-v0.1.0/batiq-depth-pro-2-0.1.0-macos-arm64.zip",
+          "sha256": "2879b2470a7d9f199d8dcf5c4274316658c494b3e17616d8c10650babe657caf",
+          "size": 481410
+        },
+        "windows-x64": {
+          "url": "https://github.com/georgeantonopoulos/batiq-plugins/releases/download/depth-pro-2-v0.1.0/batiq-depth-pro-2-0.1.0-windows-x64.zip",
+          "sha256": "d88e50152525556985704f2f824d27cf950cc47140f65a404beb6513bad7c2b1",
+          "size": 783004
+        }
+      },
+      "needs": "Needs BATIQ 0.4.0 or newer. Builds a Python environment with PyTorch (about 300 MB; 3 GB with CUDA on Linux) on first use, then fetches the model you pick from Apple (97 MB to 3.5 GB). Apple's weights are for research only, not commercial work.",
+      "repository": "https://github.com/georgeantonopoulos/batiq-plugins"
     }
   ]
 }
